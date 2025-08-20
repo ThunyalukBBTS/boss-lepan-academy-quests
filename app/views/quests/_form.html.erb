@@ -1,4 +1,4 @@
-<%= form_with(model: quest, class: "contents", data: { controller: "form", "form-target": "form" }) do |form| %>
+<%= form_with(model: quest, class: "contents",  url: create_quest_path(quest), data: { controller: "form", "form-target": "form" }) do |form| %>
   <div class="md:bg-slate-700 bg-opacity-30 rounded-2xl p-3 pt-2 md:p-6 border border-slate-600 border-opacity-40" data-testid="quest-form">
     <!-- Form Header -->
     <div class="flex items-center mb-2 md:mb-6">
