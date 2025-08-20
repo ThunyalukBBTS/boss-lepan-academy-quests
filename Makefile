@@ -13,6 +13,10 @@ migrate:
 test-all:
 	bundle exec rspec;
 
+.PHONY: seed
+seed:
+	rails db:seed;
+
 .PHONY: test
 test:
 	bundle exec rspec --exclude-pattern "spec/features/**/*_spec.rb";
@@ -31,7 +35,7 @@ db-down:
 
 .PHONY: db-reset
 db-reset:
-	rails db:reset db:migrate;
+	rails db:drop db:create db:migrate;
 
 .PHONY: lint
 lint:
