@@ -40,7 +40,6 @@ describe "User can manage quest", type: :feature do
             click_checkbox
             expect_checkbox_checked
         end
-
     end
 end
 
