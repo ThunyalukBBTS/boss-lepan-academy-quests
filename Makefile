@@ -15,7 +15,7 @@ test-all:
 
 .PHONY: seed
 seed:
-	rails db:seed;
+	rails db:seed:replant;
 
 .PHONY: test
 test:
