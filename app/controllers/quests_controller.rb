@@ -38,6 +38,7 @@ class QuestsController < ApplicationController
 
     respond_to do |format|
         format.turbo_stream
+        format.html { redirect_to quests_path, notice: "Quest deleted successfully." }
     end
   end
 
