@@ -51,9 +51,7 @@
             <h2 class="text-xl md:text-3xl font-bold text-white">Quests</h2>
           </div>
           <!-- Form Section -->
-          <%= turbo_frame_tag "new_quest_form" do %>
-            <%= render "form", quest: @quest %>
-          <% end %>
+          <%= render "form", quest: @quest %>
           <!-- Quests List -->
           <div class="mt-3 md:mt-8">
             <div class="md:max-h-[50vh] md:overflow-y-auto pr-2 space-y-1" style="scrollbar-width: thin; scrollbar-color: rgba(59, 130, 246, 0.5) rgba(148, 163, 184, 0.1);">

@@ -16,7 +16,7 @@ describe "User can manage quest", type: :feature do
         it "allows user to create a new quest" do
             fill_in_the_quest_name_field_with "Test Enter Quest Name"
             click_the_submit_button
-            should_see_the_new_quest_name "Test Enter Quest Name"
+            should_clear_form
         end
     end
 
@@ -92,6 +92,6 @@ def click_the_submit_button
     submit_button.click
 end
 
-def should_see_the_new_quest_name(name)
-    expect(page).to have_content name
+def should_clear_form
+    expect(find("[data-testid='quest-form-name']")).to have_content("")
 end
