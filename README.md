@@ -65,3 +65,19 @@
 
 -   Start up local postgresql database on docker using `docker compose up -d db`
 -   Run rails dev server `bin/dev`
+
+## Test setup
+
+-   Edit `Gemfile` to have rspec test tool
+
+    ```gemfile
+    group :test do
+        gem "rspec-rails"
+        gem "capybara"
+        gem "selenium-webdriver"
+    end
+    ```
+
+-   Run rspec initial command `bundle exec rails generate rspec:install`
+-   Edit `spec/rails_helper.rb`
+-   Try to run test using `bundle exec rspec`
