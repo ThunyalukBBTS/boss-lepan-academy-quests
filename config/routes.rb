@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   get "/brag" => "brag#index", as: :brag
   root "quests#index"
+  get "*path", to: redirect("/")
 end
