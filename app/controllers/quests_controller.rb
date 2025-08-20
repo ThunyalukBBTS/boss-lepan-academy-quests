@@ -1,22 +1,10 @@
 class QuestsController < ApplicationController
-  before_action :set_quest, only: %i[ show edit update destroy ]
+  before_action :set_quest, only: %i[ update destroy ]
 
   # GET /quests or /quests.json
   def index
-    @quests = Quest.all
-  end
-
-  # GET /quests/1 or /quests/1.json
-  def show
-  end
-
-  # GET /quests/new
-  def new
+    @quests = Quest.all.order(id: :asc)
     @quest = Quest.new
-  end
-
-  # GET /quests/1/edit
-  def edit
   end
 
   # POST /quests or /quests.json
@@ -25,11 +13,11 @@ class QuestsController < ApplicationController
 
     respond_to do |format|
       if @quest.save
-        format.html { redirect_to @quest, notice: "Quest was successfully created." }
-        format.json { render :show, status: :created, location: @quest }
+        format.turbo_stream
+        format.html { redirect_to quests_path, notice: "Quest was successfully created." }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @quest.errors, status: :unprocessable_entity }
+        format.turbo_stream
+        format.html { redirect_to quests_path, notice: "Quest was successfully created." }
       end
     end
   end
@@ -38,11 +26,8 @@ class QuestsController < ApplicationController
   def update
     respond_to do |format|
       if @quest.update(quest_params)
-        format.html { redirect_to @quest, notice: "Quest was successfully updated.", status: :see_other }
-        format.json { render :show, status: :ok, location: @quest }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @quest.errors, status: :unprocessable_entity }
+        format.turbo_stream
+        format.html { redirect_to quests_path }
       end
     end
   end
@@ -52,8 +37,7 @@ class QuestsController < ApplicationController
     @quest.destroy!
 
     respond_to do |format|
-      format.html { redirect_to quests_path, notice: "Quest was successfully destroyed.", status: :see_other }
-      format.json { head :no_content }
+        format.turbo_stream
     end
   end
 
