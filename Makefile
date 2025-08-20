@@ -9,9 +9,17 @@ run:
 migrate:
 	rails db:migrate;
 
+.PHONY: test-all
+test-all:
+	bundle exec rspec;
+
 .PHONY: test
 test:
-	bundle exec rspec;
+	bundle exec rspec --exclude-pattern "spec/features/**/*_spec.rb";
+
+.PHONY: e2e
+e2e:
+	bundle exec rspec --pattern "spec/features/**/*_spec.rb";
 
 .PHONY: db-up
 db-up:
