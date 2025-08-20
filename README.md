@@ -1,24 +1,67 @@
-# README
+# Boss | Academy Quests
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Requirements
 
-Things you may want to cover:
+| Tools | Version |
+| ----- | ------- |
+| ruby  | 3.4.3   |
+| rails | 8.0.2   |
 
-* Ruby version
+# Steps
 
-* System dependencies
+-   Initialize project with command `rails new boss-lepan-academy-quests`
+-   Setup local machine database by create `docker-compose.yml` file with template
+    ```yaml
+    services:
+        db:
+            image: postgres:17.4-alpine
+            restart: always
+            environment:
+                POSTGRES_USER: ${DB_USERNAME}
+                POSTGRES_PASSWORD: ${DB_PASSWORD}
+                POSTGRES_DB: ${DB_NAME}
+            ports:
+                - 5432:5432
+            volumes:
+                - academy-quests-data:/var/lib/postgresql/data
+    volumes:
+        academy-quests-data:
+    ```
+-   Create `.env` to collects credentials with template
+    ```
+    DATABASE_URL=postgres://xxx:yyy@localhost/zzz
+    DB_USERNAME=xxx
+    DB_PASSWORD=yyy
+    DB_NAME=zzz
+    ```
+-   Edit rails database connection in `database.yml` with template
 
-* Configuration
+    ```yml
+    default: &default
+        adapter: postgresql
+        encoding: unicode
+        pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+        url: <%= ENV.fetch("DATABASE_URL") { "postgres://localhost/<database_name>" } %>
 
-* Database creation
+    development:
+        <<: *default
+        database: <database_name>_development
 
-* Database initialization
+    test:
+        <<: *default
+        database: <database_name>_test
 
-* How to run the test suite
+    production:
+        primary: &primary_production
+            <<: *default
+            url: <%= ENV.fetch("DATABASE_URL") { "postgres://localhost/<database_name>" } %>
+        cache:
+            <<: *primary_production
+        queue:
+            <<: *primary_production
+        cable:
+            <<: *primary_production
+    ```
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+-   Start up local postgresql database on docker using `docker compose up -d db`
+-   Run rails dev server `bin/dev`
