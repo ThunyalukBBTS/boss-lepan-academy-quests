@@ -1,14 +1,58 @@
 <%= turbo_frame_tag dom_id(quest) do %>
-  <div class="flex items-center justify-between mb-[0.75rem]" data-testid="quest-<%= quest.id %>" >
-    <div class="flex items-center">
+  <div class="group flex items-start justify-between p-5 mb-3 bg-slate-700 bg-opacity-40 hover:bg-opacity-60 rounded-2xl transition-all duration-300 border border-slate-600 border-opacity-30 hover:border-opacity-50 hover:shadow-lg" data-testid="quest-<%= quest.id %>">
+    <div class="flex items-start flex-1 min-w-0">
       <%= form_with model: quest, method: :patch do |f| %>
-        <%= f.check_box :is_done,
-    checked: quest.is_done, class: "cursor-pointer mt-1.5 mr-2 w-4 h-4 accent-green-500", data: { controller: "checkbox", action: "change->checkbox#submit", testid: "quest-checkbox-#{quest.id}" }%>
+        <div class="relative mr-5 flex-shrink-0 mt-2">
+          <%= f.check_box :is_done,
+              checked: quest.is_done, 
+              class: "appearance-none cursor-pointer w-6 h-6 border-2 border-slate-400 rounded-lg bg-slate-700 checked:bg-emerald-500 checked:border-emerald-500 transition-all duration-200 focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-slate-800", 
+              data: { controller: "checkbox", action: "change->checkbox#submit", testid: "quest-checkbox-#{quest.id}" } %>
+          <% if quest.is_done %>
+            <svg class="absolute top-1 left-1 w-4 h-4 text-white pointer-events-none" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+          <% end %>
+        </div>
       <% end %>
-      <div class="text-white text-lg <%= quest.is_done ? "line-through" : "" %>" data-testid="quest-name-<%= quest.id %>"><%= quest.name %></div>
+      <div class="flex items-start flex-1 min-w-0">
+        <!-- Quest Type Icon -->
+        <div class="flex-shrink-0 mr-4 mt-1">
+          <% if quest.is_done %>
+            <div class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+          <% else %>
+            <div class="w-8 h-8 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center">
+              <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+          <% end %>
+        </div>
+        <!-- Quest Name with Full Text Display -->
+        <div class="flex-1 min-w-0 pr-2">
+          <div class="text-white text-lg font-medium <%= quest.is_done ? 'line-through text-slate-400' : '' %> transition-all duration-300 break-words leading-relaxed" data-testid="quest-name-<%= quest.id %>">
+            <%= quest.name %>
+          </div>
+          <% if quest.is_done %>
+            <div class="text-sm text-emerald-400 font-medium mt-2 flex items-center">
+              <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              Quest Completed!
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
-    <%= link_to quest_path(quest), data: { turbo_method: :delete, testid: "quest-delete-button-#{quest.id}" }, class: "text-red-500" do %>
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+    <!-- Delete Button -->
+    <%= link_to quest_path(quest), 
+        data: { turbo_method: :delete, testid: "quest-delete-button-#{quest.id}" }, 
+        class: "mt-0.5 flex-shrink-0 ml-4 p-3 text-red-400 hover:text-white hover:bg-red-500 rounded-xl transition-all duration-200 opacity-0 group-hover:opacity-100 transform scale-90 group-hover:scale-100",
+        title: "Delete Quest" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
         <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
       </svg>
     <% end %>

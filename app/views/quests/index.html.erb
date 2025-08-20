@@ -1,20 +1,69 @@
-<div class="px-[2rem] md:h-full">
-  <div class="md:grid md:grid-cols-2 md:h-full">
-    <div class="md:col-span-1 md:h-full md:justify-center text-center md:text-start">
-      <div class="text-white text-4xl" data-testid="boss-name"><b>Boss</b> | Thunyaluk Sasiwarinkul</div>
-      <div class="text-3xl text-[#00abf0]">Academy quests</div>
-      <div class="my-5">
-        <%= link_to "My brag document", brag_path, class:"btn bg-blue-600 text-white p-2 font-bold rounded-md" %>
+<div class="min-h-screen px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="md:grid md:grid-cols-2 md:gap-12 md:h-screen">
+      <!-- Profile Section -->
+      <div class="flex flex-col justify-center py-12 md:py-0">
+        <div class="space-y-6">
+          <!-- Header with Crown Icon -->
+          <div class="text-center md:text-left">
+            <div class="flex items-end justify-center md:justify-start mb-4">
+              <div class="text-white text-5xl font-bold" data-testid="boss-name">Boss|</div>
+              <div class="text-white text-2xl md:text-4xl opacity-90 ms-1">Thunyaluk Sasiwarinkul</div>
+            </div>
+            <!-- Academy Quests Title with Book Icon -->
+            <div class="flex items-center justify-center md:justify-start mb-8">
+              <svg class="w-8 h-8 text-blue-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+              </svg>
+              <div class="text-4xl text-blue-400 font-semibold">Academy Quests</div>
+            </div>
+          </div>
+          <!-- Brag Document Button -->
+          <div class="flex justify-center md:justify-start mb-10">
+            <%= link_to brag_path, class: "group relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl" do %>
+              <svg class="w-6 h-6 mr-3 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+              My Brag Document
+              <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 rounded-xl transition-opacity duration-300"></div>
+            <% end %>
+          </div>
+          <!-- Profile Image -->
+          <div class="flex justify-center md:justify-start">
+            <div class="relative">
+              <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-600 rounded-2xl transform rotate-6 opacity-75"></div>
+              <div class="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-600 rounded-2xl transform -rotate-6 opacity-50"></div>
+              <%= image_tag "GDSC Profile.jpg", class: "relative rounded-2xl w-64 md:w-80 shadow-2xl border-4 border-white transform transition-transform duration-300 hover:scale-105" %>
+            </div>
+          </div>
+        </div>
       </div>
-      <%= image_tag "GDSC Profile.jpg", class: "my-5 rounded-md w-[200px] md:w-[300px] mx-auto md:mx-0" %>
-    </div>
-    <div class="md:col-span-1 overflow-auto">
-      <%= turbo_frame_tag "new_quest_form" do %>
-        <%= render "form", quest: @quest %>
-      <% end %>
-      <%= turbo_frame_tag "quests" do %>
-        <%= render partial: "quest", collection: @quests, as: :quest %>
-      <% end %>
+      <!-- Quests Management Section -->
+      <div class="py-12 md:py-0 flex flex-col justify-center">
+        <div class="bg-slate-800 bg-opacity-60 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-slate-600 border-opacity-50">
+          <!-- Section Header -->
+          <div class="flex items-center mb-8">
+            <div class="relative">
+              <svg class="w-8 h-8 text-emerald-400 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+              </svg>
+            </div>
+            <h2 class="text-3xl font-bold text-white">Quests</h2>
+          </div>
+          <!-- Form Section -->
+          <%= turbo_frame_tag "new_quest_form" do %>
+            <%= render "form", quest: @quest %>
+          <% end %>
+          <!-- Quests List -->
+          <div class="mt-8">
+            <div class="max-h-[45vh] overflow-y-auto pr-2 space-y-1" style="scrollbar-width: thin; scrollbar-color: rgba(59, 130, 246, 0.5) rgba(148, 163, 184, 0.1);">
+              <%= turbo_frame_tag "quests" do %>
+                <%= render partial: "quest", collection: @quests, as: :quest %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

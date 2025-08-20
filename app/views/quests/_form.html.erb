@@ -1,7 +1,37 @@
 <%= form_with(model: quest, class: "contents") do |form| %>
-  <div class="md:flex mb-[0.75rem]" data-testid="quest-form">
-    <%= form.text_field :name, class:"bg-gray-50 mb-2 md:mb-0 mr-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", data: { testid: "quest-form-name" }, required: true  %>
-    <%= form.hidden_field :is_done, value: false %>
-    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer", data: { testid: "quest-form-submit" } %>
+  <div class="bg-slate-700 bg-opacity-30 rounded-2xl p-6 border border-slate-600 border-opacity-40" data-testid="quest-form">
+    <!-- Form Header -->
+    <div class="flex items-center mb-6">
+      <div class="w-10 h-10 bg-emerald-500 bg-opacity-20 rounded-xl flex items-center justify-center mr-4">
+        <svg class="w-6 h-6 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+        </svg>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold text-white">Create New Quest</h3>
+        <p class="text-slate-400 text-sm">Add a new challenge</p>
+      </div>
+    </div>
+    <!-- Form Input Section -->
+    <div class="space-y-4">
+      <div class="relative">
+        <%= form.text_field :name, 
+            placeholder: "Enter your quest description...",
+            class: "w-full px-5 py-4 bg-slate-800 bg-opacity-60 border border-slate-600 border-opacity-50 text-white text-base rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-opacity-80 placeholder-slate-400 transition-all duration-200", 
+            data: { testid: "quest-form-name" }, 
+            required: true %>
+        <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+          <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+          </svg>
+        </div>
+      </div>
+      <%= form.hidden_field :is_done, value: false %>
+      <div class="flex justify-end">
+        <%= form.submit "Add Quest", 
+            class: "group relative px-8 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold rounded-xl cursor-pointer transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-slate-800", 
+            data: { testid: "quest-form-submit" } %>
+      </div>
+    </div>
   </div>
 <% end %>
