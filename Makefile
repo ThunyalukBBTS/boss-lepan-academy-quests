@@ -21,3 +21,7 @@ db-down:
 .PHONY: db-reset
 db-reset:
 	rails db:reset db:migrate;
+
+.PHONY: lint
+lint:
+	bundle exec rubocop -a;
