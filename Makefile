@@ -28,3 +28,11 @@ db-reset:
 .PHONY: lint
 lint:
 	bundle exec rubocop -a;
+
+.PHONY: app-up
+app-up:
+	docker compose up -d app;
+
+.PHONY: app-down
+app-down:
+	docker compose down app;
