@@ -81,3 +81,10 @@
 -   Run rspec initial command `bundle exec rails generate rspec:install`
 -   Edit `spec/rails_helper.rb`
 -   Try to run test using `bundle exec rspec`
+## Main feature development
+- Create scaffold use template from [rails-generate.com](https://rails-generate.com/scaffold) then use command `bin/rails generate scaffold Quest name:string is_done:boolean`
+- Run migration `rails db:migrate` or `make migrate`
+- Change root path to quests#index in `config/routes.rb`
+- Custom elements in `_form.html.erb`, `_quest.html.erb`, `index.html.erb` in the folder `app/views/quests/` and edit layout of page in the `app/views/layouts/application.html.erb` file
+- Create Stimulus controller to control checkbox form submit using command `rails g stimulus checkbox` then create submit method that submit closest form
+- 
